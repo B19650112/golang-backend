@@ -172,26 +172,21 @@ func JSONCheckTblProduct(c *gin.Context) {
 	title := c.Query("title")
 	description := c.Query("description")
 	price := c.Query("price")
-	mfound := c.Query("mfound")
 
 	if imagepath == "" {
-		c.JSON(http.StatusOK, "Path Image harus diisi")
+		c.JSON(http.StatusOK, "Path Image can't blank !")
 		return
 	}
 	if title == "" {
-		c.JSON(http.StatusOK, "Title harus diisi")
+		c.JSON(http.StatusOK, "Title can't blank !")
 		return
 	}
 	if description == "" {
-		c.JSON(http.StatusOK, "Description harus diisi")
+		c.JSON(http.StatusOK, "Description can't blank !")
 		return
 	}
 	if price == "" || price == "0" {
-		c.JSON(http.StatusOK, "Price harus > 0")
-		return
-	}
-	if mfound == "1" {
-		c.JSON(http.StatusOK, "")
+		c.JSON(http.StatusOK, "Price must greater than 0")
 		return
 	}
 	c.JSON(http.StatusOK, "")
