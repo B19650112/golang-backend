@@ -72,8 +72,8 @@ DROP TABLE IF EXISTS `tabelproduct`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tabelproduct` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `imagePath` varchar(50) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `imagepath` varchar(50) NOT NULL,
   `title` varchar(50) NOT NULL,
   `description` varchar(66) NOT NULL,
   `price` int(11) NOT NULL,
