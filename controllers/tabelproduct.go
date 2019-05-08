@@ -12,7 +12,7 @@ import (
 	"io/ioutil"
 )
 
-var xParam1 string
+var xparmSearch string
 
 // JSONListTblProduct : List seluruh tabelproduct
 func JSONListTblProduct(c *gin.Context) {
@@ -24,30 +24,30 @@ func JSONListTblProduct(c *gin.Context) {
 	}
 
 	tabelproduct := []entities.TabelProduct{}
-	param1 := c.Query("searchname")
-	param3 := c.Query("mstart")
-	param4 := c.Query("mend")
+	parmSearch := c.Query("searchname")
+	parmStart := c.Query("mstart")
+	parmEnd := c.Query("mend")
 
-	if param1 != "" {
-		if param1 != xParam1 {
-			xParam1 = param1
+	if parmSearch != "" {
+		if parmSearch != xparmSearch {
+			xparmSearch = parmSearch
 			DelTempProduct()  // Delete producttemp before
-			tabelCopy = `Call copy_tabelproduct('`+param1+`');` // Copy to producttemp for searchname product name
+			tabelCopy = `Call copy_tabelproduct('`+parmSearch+`');` // Copy to producttemp for searchname product name
 			rows, err := Db.Query(tabelCopy)
 			if err != nil {
 				panic(err)
 			}
 			defer rows.Close()
-			CountProductTemp(param1)  // Update countproducttemp of tabelcount
+			CountProductTemp(parmSearch)  // Update countproducttemp of tabelcount
 		}
 	} else {
 		DelTempProduct()  // Delete producttemp
 	}
 
-	if param1 != "" {
-		sqlProduct = `SELECT * FROM producttemp WHERE idtemp > '`+param3+`' AND idtemp <='`+param4+`' ORDER By idtemp;`
+	if parmSearch != "" {
+		sqlProduct = `SELECT * FROM producttemp WHERE idtemp > '`+parmStart+`' AND idtemp <='`+parmEnd+`' ORDER By idtemp;`
 	} else {
-		sqlProduct = `SELECT * FROM tabelproduct WHERE id > '`+param3+`' AND id <='`+param4+`' ORDER By id;`
+		sqlProduct = `SELECT * FROM tabelproduct WHERE id > '`+parmStart+`' AND id <='`+parmEnd+`' ORDER By id;`
 	}
 	
 	dataList := models.ListTblProduct(Db, sqlProduct)
@@ -106,7 +106,7 @@ func JSONAddTblProduct(c *gin.Context) {
 	defer updDB2.Close()
 
 	Db.Close()
-	c.JSON(http.StatusOK, "Add Record Success")
+	c.JSON(http.StatusOK, "Add record successfully")
 }
 // JSONUpdateTblProduct : Update tabelproduct
 func JSONUpdateTblProduct(c *gin.Context) {
@@ -139,7 +139,7 @@ func JSONUpdateTblProduct(c *gin.Context) {
 	}
 	defer updDB.Close()
 	Db.Close()
-	c.JSON(http.StatusOK, "Update Record Success")
+	c.JSON(http.StatusOK, "Update record successfully")
 }
 // JSONDeleteTblProduct : Delete tabelproduct
 func JSONDeleteTblProduct(c *gin.Context) {
@@ -163,7 +163,7 @@ func JSONDeleteTblProduct(c *gin.Context) {
 	}
 	defer updDB2.Close()
 	Db.Close()
-	c.JSON(http.StatusOK, "Delete Record Success")
+	c.JSON(http.StatusOK, "Delete record successfully")
 }
 //JSONCheckTblProduct : input validation tabelproduct
 func JSONCheckTblProduct(c *gin.Context) {

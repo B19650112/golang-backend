@@ -57,7 +57,7 @@ func CheckLogin(c *gin.Context) {
 			"code": 204,
 			"status": "BAD",
         	"userlogin": "unknown",
-        	"message": "Record is empy",
+        	"message": "Username not found",
 		}
 	} else {
 		byteHash := []byte(tbl.Password)
@@ -70,14 +70,14 @@ func CheckLogin(c *gin.Context) {
 				"passlogin": password,
 				"token": tbl.Token,
 				"level": tbl.Level,
-				"message": "login berhasil",
+				"message": "Login successful..",
 			}
 		} else {
 			result = gin.H {
 				"code": 204,
         		"status": "BAD",
         		"userlogin": "unknown",
-        		"message": "username atau password salah.. !",
+        		"message": "Invalid password.. !",
 			}
 		}
 	}
