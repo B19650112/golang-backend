@@ -1,7 +1,7 @@
 package main
 
 import (
-	"golang-backend/routers"
+	"golang-pagination/routers"
 	"database/sql"
 )
 
@@ -12,5 +12,5 @@ func main() {
 
 	r := routers.SetupRouter()
 	//running
-	r.Run(":8081")
+	r.Run(":8080")
 }

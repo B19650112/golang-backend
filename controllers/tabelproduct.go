@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"golang-backend/config"
-	"golang-backend/entities"
-	"golang-backend/models"
+	"golang-pagination/config"
+	"golang-pagination/entities"
+	"golang-pagination/models"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -12,62 +12,23 @@ import (
 	"io/ioutil"
 )
 
-var xparmSearch string
-
-// JSONListTblProduct : List seluruh tabelproduct
+// JSONListTblProduct : List all tabelproduct
 func JSONListTblProduct(c *gin.Context) {
-	var sqlProduct, tabelCopy string
-
+		
 	Db, err := config.DbConnect()
 	if err != nil {
 		panic("Not Connect database")
 	}
 
 	tabelproduct := []entities.TabelProduct{}
-	parmSearch := c.Query("searchname")
-	parmStart := c.Query("mstart")
-	parmEnd := c.Query("mend")
 
-	if parmSearch != "" {
-		if parmSearch != xparmSearch {
-			xparmSearch = parmSearch
-			DelTempProduct()  // Delete producttemp before
-			tabelCopy = `Call copy_tabelproduct('`+parmSearch+`');` // Copy to producttemp for searchname product name
-			rows, err := Db.Query(tabelCopy)
-			if err != nil {
-				panic(err)
-			}
-			defer rows.Close()
-			CountProductTemp(parmSearch)  // Update countproducttemp of tabelcount
-		}
-	} else {
-		DelTempProduct()  // Delete producttemp
-	}
+	sqlProduct := `SELECT * FROM tabelproduct order by id;`
+	dataList:= models.ListTblProduct(Db, sqlProduct)
+	tabelproduct = dataList
+	Db.Close()
 
-	if parmSearch != "" {
-		sqlProduct = `SELECT * FROM producttemp WHERE idtemp > '`+parmStart+`' AND idtemp <='`+parmEnd+`' ORDER By idtemp;`
-	} else {
-		sqlProduct = `SELECT * FROM tabelproduct WHERE id > '`+parmStart+`' AND id <='`+parmEnd+`' ORDER By id;`
-	}
+	c.JSON(http.StatusOK, tabelproduct)
 	
-	dataList := models.ListTblProduct(Db, sqlProduct)
-	tabelproduct = dataList
-	c.JSON(http.StatusOK, tabelproduct)
-	tabelproduct = nil
-}
-// JSONViewTblProduct : view or edit display tabelproduct by id
-func JSONViewTblProduct(c *gin.Context) {
-	Db, err := config.DbConnect()
-	if err != nil {
-		panic("Not Connect database")
-	}
-	tabelproduct := []entities.TabelProduct{}
-	paramID := c.Param("id")
-	sqlProduct := `SELECT * FROM tabelproduct WHERE id ='` + paramID + `';`
-	dataList := models.ViewTblProduct(Db, sqlProduct)
-	tabelproduct = dataList
-	c.JSON(http.StatusOK, tabelproduct)
-	tabelproduct = nil
 }
 // JSONAddTblProduct : Add tabelproduct
 func JSONAddTblProduct(c *gin.Context) {
@@ -85,6 +46,7 @@ func JSONAddTblProduct(c *gin.Context) {
 	if err2 != nil {
 	 	fmt.Println(err2)
 	}
+	
 	imagepath := tabelproduct.ImagePath
 	title := tabelproduct.Title
 	description := tabelproduct.Description
@@ -96,14 +58,6 @@ func JSONAddTblProduct(c *gin.Context) {
 		panic(err)
 	}
 	defer updDB.Close()
-
-	var numRows = 1
-	var mQuery2 = `Call update_countproduct('` + strconv.Itoa(numRows) + `');`
-	updDB2, err := Db.Query(mQuery2)
-	if err != nil {
-		panic(err)
-	}
-	defer updDB2.Close()
 
 	Db.Close()
 	c.JSON(http.StatusOK, "Add record successfully")
@@ -154,14 +108,6 @@ func JSONDeleteTblProduct(c *gin.Context) {
 		panic(err)
 	}
 	defer updDB.Close()
-
-	var numRows = -1
-	var mQuery2 = `Call update_countproduct('` + strconv.Itoa(numRows) + `');`
-	updDB2, err := Db.Query(mQuery2)
-	if err != nil {
-		panic(err)
-	}
-	defer updDB2.Close()
 	Db.Close()
 	c.JSON(http.StatusOK, "Delete record successfully")
 }
@@ -174,7 +120,7 @@ func JSONCheckTblProduct(c *gin.Context) {
 	price := c.Query("price")
 
 	if imagepath == "" {
-		c.JSON(http.StatusOK, "Path Image can't blank !")
+		c.JSON(http.StatusOK, "Image Path can't blank !")
 		return
 	}
 	if title == "" {
@@ -191,41 +137,20 @@ func JSONCheckTblProduct(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, "")
 }
-// CountProductTemp : Update countproducttemp of tabelcount
-func CountProductTemp(mSearch string) {
+//JSONCountTblProduct : Search count tabelproduct
+func JSONCountTblProduct(c *gin.Context) {
 	Db, err := config.DbConnect()
 	if err != nil {
 		panic("Not Connect database")
 	}
 	var countProduct int
-	if mSearch != "" {
-		mQuery := `Call count_tabelproduct('` + mSearch + `');`
-		err := Db.QueryRow(mQuery).Scan(&countProduct)
-		if err != nil {
-			panic(err)
-		}
-		var mQuery2 = `Call update_countproducttemp('` + strconv.Itoa(countProduct) + `');`
-		updDB2, err := Db.Query(mQuery2)
-		if err != nil {
-			panic(err)
-		}
-		defer updDB2.Close()
+	tblcount := `SELECT countproduct FROM tabelcount;`
+	err2 := Db.QueryRow(tblcount).Scan(&countProduct)
+	if err2 != nil {
+		panic(err2)
 	}
 	Db.Close()
-}
-// DelTempProduct : Delete temporary file 
-func DelTempProduct() {
-	Db, err := config.DbConnect()
-	if err != nil {
-		panic("Not Connect database")
-	}
-	mQuery := `DROP TABLE IF EXISTS producttemp;`
-	rows, err := Db.Query(mQuery)
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
-	Db.Close()
+	c.JSON(http.StatusOK, countProduct)
 }
 // JSONPrintTblProduct : Print tabelproduct
 func JSONPrintTblProduct(c *gin.Context) {

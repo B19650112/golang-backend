@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"golang-backend/entities"
-	"golang-backend/config"
-	"golang-backend/models"
+	"golang-pagination/entities"
+	"golang-pagination/config"
+	"golang-pagination/models"
 	"net/http"
 	"github.com/gin-gonic/gin"
 	"fmt"

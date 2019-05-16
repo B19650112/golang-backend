@@ -12,7 +12,7 @@ type TabelUser struct {
 }
 // TabelProduct : Structure tabelproduct
 type TabelProduct struct {
-	ID          string    `json:"ID"`
+	ID          int       `json:"ID,string"`
 	ImagePath   string    `json:"imagepath"`
 	Title		string    `json:"title"`
 	Description string    `json:"description"`
@@ -26,20 +26,4 @@ type TabelResume struct {
 	Title		string    `json:"title"`
 	Photo		string    `json:"photo"`
 	Description	string    `json:"description"`
-}
-// TabelCount : Structure tabelcount
-type TabelCount struct {
-	ID                string  `json:"ID"`
-	CountProduct      int     `json:"countproduct"`
-	CountProductTemp  int     `json:"countproducttemp"`
-}
-// StartEnd : Structure StartId and EndId
-type StartEnd struct {
-	StartID     int     `json:"startID"`
-	EndID		int     `json:"endID"`
-}
-// DefaultPage : Structure defaultpage
-type DefaultPage struct {
-	ID          string  `json:"ID"`
-	DefaultPage int     `json:"defaultpage"`
 }

@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"golang-backend/entities"
-	"golang-backend/config"
+	"golang-pagination/entities"
+	"golang-pagination/config"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"golang.org/x/crypto/bcrypt"

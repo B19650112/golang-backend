@@ -2,8 +2,8 @@ package controllers
 
 import (
     "github.com/gin-gonic/gin"
-	"golang-backend/config"
-	"golang-backend/entities"
+	"golang-pagination/config"
+	"golang-pagination/entities"
 	"net/http"
 )
 //JSONDefaultPage : Default Page
