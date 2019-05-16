@@ -27,10 +27,5 @@ func SetupRouter() *gin.Engine {
 		grp01.GET("/checktblproduct", controllers.JSONCheckTblProduct)
 	}
 
-	grp02 := r.Group("api/grp02")
-	{ 
-		 grp02.GET("/listtblresume", controllers.JSONListTblResume)
-	}
-
 	return r
 }
