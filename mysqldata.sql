@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2019 at 11:22 PM
+-- Generation Time: May 18, 2019 at 12:55 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -10059,6 +10059,38 @@ INSERT INTO `tabelproduct` (`id`, `imagepath`, `title`, `description`, `price`) 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tabelresume`
+--
+
+CREATE TABLE `tabelresume` (
+  `id` int(11) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `photo` varchar(40) NOT NULL,
+  `description` varchar(500) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tabelresume`
+--
+
+INSERT INTO `tabelresume` (`id`, `name`, `title`, `photo`, `description`) VALUES
+(1, 'Suharto', 'President of the Indonesia (2st)', '/foto1.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
+(2, 'Vladimir Putin', 'President of the Russian', '/foto2.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
+(3, 'Barack Obama', 'President of the United States (44th)', '/foto3.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
+(4, 'Kim Jong Un', 'President of the North Korea', '/foto4.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
+(5, 'Xi Jinping', 'President of the RRC', '/foto5.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
+(6, 'Recep Tayyip Erdogan', 'President of the Turkey', '/foto6.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
+(7, 'Erna Solberg Wesenberg', 'Prime Minister of Norway', '/foto7.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
+(8, 'Angela Merkel', 'Chancellor of Germany', '/foto8.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
+(9, 'Justin Trudeau', 'Prime Minister of Canada', '/foto9.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
+(10, 'Theresa May', 'Prime Minister of British', '/foto10.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
+(11, 'Hassanal Bolkiah', 'Prime Minister of Brunei Darussalam', '/foto11.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'),
+(12, 'Emmanuel Macron', 'President of the French', '/foto12.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tabeluser`
 --
 
@@ -10090,6 +10122,12 @@ ALTER TABLE `tabelproduct`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tabelresume`
+--
+ALTER TABLE `tabelresume`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tabeluser`
 --
 ALTER TABLE `tabeluser`
@@ -10104,6 +10142,12 @@ ALTER TABLE `tabeluser`
 --
 ALTER TABLE `tabelproduct`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10001;
+
+--
+-- AUTO_INCREMENT for table `tabelresume`
+--
+ALTER TABLE `tabelresume`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tabeluser`

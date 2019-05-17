@@ -1,7 +1,7 @@
 package main
 
 import (
-	"golang-pagination/routers"
+	"golang-backend/routers"
 	"database/sql"
 )
 

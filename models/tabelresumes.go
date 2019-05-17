@@ -3,7 +3,7 @@ package models
 import (
 	// _ : import sql driver
 	_ "github.com/go-sql-driver/mysql"
-	"golang-pagination/entities"
+	"golang-backend/entities"
 	"database/sql"
 )
 

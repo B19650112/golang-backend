@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"golang-pagination/controllers"
+	"golang-backend/controllers"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
 )
@@ -17,15 +17,21 @@ func SetupRouter() *gin.Engine {
 	{
 		grp00.POST("/ceklogin", controllers.CheckLogin)
 	}
-	
+
 	grp01 := r.Group("api/grp01")
 	{
 		grp01.GET("/listtblproduct", controllers.JSONListTblProduct)
+		grp01.GET("/viewtblproduct/:id", controllers.JSONViewTblProduct)
 		grp01.POST("/addtblproduct", controllers.JSONAddTblProduct)
 		grp01.POST("/updatetblproduct/:id", controllers.JSONUpdateTblProduct)
 		grp01.DELETE("/deletetblproduct/:id", controllers.JSONDeleteTblProduct)
 		grp01.GET("/checktblproduct", controllers.JSONCheckTblProduct)
 	}
 
+	grp02 := r.Group("api/grp02")
+	{ 
+		 grp02.GET("/listtblresume", controllers.JSONListTblResume)
+	}
+	
 	return r
 }

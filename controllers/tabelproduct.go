@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"golang-pagination/config"
-	"golang-pagination/entities"
-	"golang-pagination/models"
+	"golang-backend/config"
+	"golang-backend/entities"
+	"golang-backend/models"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -14,7 +14,8 @@ import (
 
 // JSONListTblProduct : List all tabelproduct
 func JSONListTblProduct(c *gin.Context) {
-		
+	var sqlProduct string
+
 	Db, err := config.DbConnect()
 	if err != nil {
 		panic("Not Connect database")
@@ -22,13 +23,34 @@ func JSONListTblProduct(c *gin.Context) {
 
 	tabelproduct := []entities.TabelProduct{}
 
-	sqlProduct := `SELECT * FROM tabelproduct order by id;`
+	parmSearch := c.Query("searchname")
+	if parmSearch != "" {
+		idSearch := "%"+parmSearch+"%"
+		sqlProduct = `SELECT * FROM tabelproduct where description like '`+ idSearch+`' order by id;`
+	} else {
+		sqlProduct = `SELECT * FROM tabelproduct order by id;`
+	}
+	
 	dataList:= models.ListTblProduct(Db, sqlProduct)
 	tabelproduct = dataList
 	Db.Close()
 
 	c.JSON(http.StatusOK, tabelproduct)
 	
+}
+// JSONViewTblProduct : view or edit display tabelproduct by id
+func JSONViewTblProduct(c *gin.Context) {
+	Db, err := config.DbConnect()
+	if err != nil {
+		panic("Not Connect database")
+	}
+	tabelproduct := []entities.TabelProduct{}
+	paramID := c.Param("id")
+	sqlProduct := `SELECT * FROM tabelproduct WHERE id ='` + paramID + `';`
+	dataList := models.ListTblProduct(Db, sqlProduct)
+	tabelproduct = dataList
+	c.JSON(http.StatusOK, tabelproduct)
+	tabelproduct = nil
 }
 // JSONAddTblProduct : Add tabelproduct
 func JSONAddTblProduct(c *gin.Context) {
